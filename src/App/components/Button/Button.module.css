@@ -7,14 +7,10 @@
   margin: 5px;
   min-width: 40px;
   font-weight: 700;
-  box-shadow: 10xp 10px 20px grey;
+  box-shadow: 10px 10px 20px grey;
   cursor: pointer;
 }
 .Button.clicked {
-    box-shadow: 2xp 2px 20px grey;
-    border-style: dashed;
-}
-.Button:hover,
-.Button:click {
-  background-color: rgb(45, 98, 129)!important;
+    box-shadow: 2px 2px 20px grey;
+    border-style: dashed!important;
 }

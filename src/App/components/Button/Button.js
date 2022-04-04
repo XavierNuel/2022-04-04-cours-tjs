@@ -1,26 +1,41 @@
-import React , { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./Button.module.css";
 import PropTypes from "prop-types";
-import { isPropertyAccessOrQualifiedName } from "typescript";
 
 function Button(props) {
-    const [clicked, setclicked] = useState(false);
+  const [clicked, setclicked] = useState(false);
+  useEffect(
+    // fonction au mount du composant
+    () => {
+      if (clicked) {
+        setTimeout(() => {
+          setclicked(false);
+        }, 700);
+      }
+      // Return
+      // fonction pour le démount du composant si on veut
+      // return () => {
+      // };
+    },
+    [clicked]
+  );
+
   console.log(props);
   return (
     <button
-      className={style.Button + ' ' + 'clicked'}
+      className={`${style.Button}${clicked ? " " + style.clicked : ""}`}
       onClick={(evt) => {
         props.evtOnClick("Hello");
         setclicked(true);
-        setTimeout(()=>{
-            setclicked( false)
-      }, 1000)
       }}
-      style={{...props.style, backgroundColor: props.bgColor, color: props.color }}
+      style={{
+        ...props.style,
+        backgroundColor: props.bgColor,
+        color: props.color,
+      }}
       type={props.type}
     >
       {props.children}
-      {clicked?'clicked':'unclicked'}
     </button>
   );
 }
