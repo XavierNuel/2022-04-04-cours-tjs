@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function Button(props) {
   const [clicked, setclicked] = useState(false);
   useEffect(
-    // fonction au mount du composant
+    // fonction au mount du composant, basé sur l'état de ma valeur 'clicked'
     () => {
       if (clicked) {
         setTimeout(() => {
@@ -17,7 +17,15 @@ function Button(props) {
       // return () => {
       // };
     },
-    [clicked]
+    [clicked] // basé sur le changement de cette valeur
+  );
+
+  useEffect(
+    // fonction au mount du composant uniquement
+    () => {
+      console.log("Composant monté");
+    },
+    []
   );
 
   console.log(props);
