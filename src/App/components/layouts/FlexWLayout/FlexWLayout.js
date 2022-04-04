@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import style from "./FlexHLayout.module.scss";
+import style from "./FlexWLayout.module.scss";
 
 
 const initialState = {};
@@ -9,19 +9,19 @@ const initialState = {};
  * @param {*} props
  * @returns
  */
-const FlexHLayout = (props) => {
+const FlexWLayout = (props) => {
   return (
-    <div className={style.FlexHLayout} data-testid="FlexHLayout">
+    <div className={style.FlexWLayout} data-testid="FlexWLayout">
       {props.children}
     </div>
   );
 };
 
-FlexHLayout.propTypes = {
+FlexWLayout.propTypes = {
   children: PropTypes.any.isRequired,
 };
-FlexHLayout.defaultProps = {
+FlexWLayout.defaultProps = {
   children: <div>Children absents</div>
 };
 
-export default FlexHLayout;
+export default FlexWLayout;

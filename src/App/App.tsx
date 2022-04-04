@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import style from "./App.module.css";
-import Button from "./components/Button/Button";
+
+import FlexWLayout from "./components/layouts/FlexWLayout/FlexWLayout";
+import MemeForm from "./components/MemeForm/MemeForm";
+import MemeViewer from "./components/MemeViewer/MemeViewer";
 
 // On défini les types des variables de notre App
 interface I_AppProps {
@@ -25,24 +28,10 @@ class App extends Component<I_AppProps, I_AppState> {
   render(): React.ReactNode {
     return (
       <div className={style.App}>
-        Valeur du compteur : {this.state.counter}
-        <br />
-        <Button
-          evtOnClick={() => {
-            this.setState({ counter: this.state.counter + 1 });
-            console.log(this.state);
-          }}
-        >
-          {this.state.textButton}
-        </Button>
-        <Button
-          evtOnClick={() => {
-            this.setState({ counter: this.state.counter + 1 });
-            console.log(this.state);
-          }}
-        >
-          {this.state.textButton}
-        </Button>
+        <FlexWLayout>
+          <MemeViewer></MemeViewer>
+          <MemeForm></MemeForm>
+        </FlexWLayout>
       </div>
     );
   }
