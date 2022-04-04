@@ -6,12 +6,17 @@ function App() {
   return (
     <div className="App">
       Test<br />
-      <Button text="Press the button" 
+      <Button
       evtOnClick={ (arg: any) => {
         console.log(arg);
-      }} />
-      <Button text="Don't push the ref button" bgColor="tomato" />
-      <Button text="Benjamin button"/>
+      }}>
+        <div>Enfant 1</div>
+        <div>Enfant 2</div>
+      </Button>
+      <Button bgColor="tomato">Chaine</Button>
+      <Button>
+        <div>Enfant seul</div>
+      </Button>
     </div>
   );
 }
