@@ -1,20 +1,26 @@
-import React from "react";
+import React , { useState } from "react";
 import style from "./Button.module.css";
 import PropTypes from "prop-types";
 import { isPropertyAccessOrQualifiedName } from "typescript";
 
 function Button(props) {
+    const [clicked, setclicked] = useState(false);
   console.log(props);
   return (
     <button
-      className={style.Button}
+      className={style.Button + ' ' + 'clicked'}
       onClick={(evt) => {
         props.evtOnClick("Hello");
+        setclicked(true);
+        setTimeout(()=>{
+            setclicked( false)
+      }, 1000)
       }}
       style={{...props.style, backgroundColor: props.bgColor, color: props.color }}
       type={props.type}
     >
       {props.children}
+      {clicked?'clicked':'unclicked'}
     </button>
   );
 }
