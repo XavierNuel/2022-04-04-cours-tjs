@@ -12,8 +12,7 @@ interface I_AppProps {
 
 // On défini les types des états de notre App
 interface I_AppState {
-  counter: number;
-  textButton: string;
+  meme: {}
 }
 
 class App extends Component<I_AppProps, I_AppState> {
@@ -29,8 +28,10 @@ class App extends Component<I_AppProps, I_AppState> {
     return (
       <div className={style.App}>
         <FlexWLayout>
-          <MemeViewer></MemeViewer>
-          <MemeForm></MemeForm>
+          <div>
+            <MemeViewer meme={} />
+          </div>
+          <MemeForm />
         </FlexWLayout>
       </div>
     );
@@ -45,9 +46,9 @@ class App extends Component<I_AppProps, I_AppState> {
     );
   }
 
-  componentDidUpdate(oldProps:I_AppProps, oldState:I_AppState){
-    console.log('props =>', oldProps, this.props);
-    console.log('states =>', oldState, this.state);
+  componentDidUpdate(oldProps: I_AppProps, oldState: I_AppState) {
+    console.log("props =>", oldProps, this.props);
+    console.log("states =>", oldState, this.state);
     console.log(
       "%c%s",
       "font-size:24px;color:blue;font-weight:600",

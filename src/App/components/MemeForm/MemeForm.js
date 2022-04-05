@@ -1,6 +1,7 @@
 import React , { useState } from "react";
 import PropTypes from "prop-types";
 import style from "./MemeForm.module.scss";
+import Button from "../Button/Button";
 
 const initialState = {};
 /**
@@ -13,6 +14,8 @@ const MemeForm = (props) => {
   return (
     <div className={style.MemeForm} data-testid="MemeForm">
       memeForm
+      <br />
+      <Button>Bouton</Button>
     </div>
   );
 };
