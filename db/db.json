@@ -9,7 +9,8 @@
       "fontSize": 30,
       "color": "#456123",
       "underline": true,
-      "italic": false
+      "italic": false,
+      "imageId": 0
     }
   ],
   "images": [
@@ -21,4 +22,4 @@
       "name": "south-park"
     }
   ]
-}
+}0

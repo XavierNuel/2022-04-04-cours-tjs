@@ -8,6 +8,7 @@
 export interface I_Meme {
   id?: number; // ? => facultatif
   text: string;
+  titre: string;
   x: number;
   y: number;
   fontWeight: string;
@@ -15,11 +16,12 @@ export interface I_Meme {
   color: string;
   underline: boolean;
   italic: boolean;
-  imageId: number|null; // number ou nul
+  imageId: number; // number // number|null  => ou null
 }
 
 export const DummyMeme: I_Meme = {
-  text: "Dummy Meme",
+  titre: "Dummy Meme",
+  text: "Texte Dummy Meme",
   x: 50,
   y: 100,
   fontWeight: "900",
