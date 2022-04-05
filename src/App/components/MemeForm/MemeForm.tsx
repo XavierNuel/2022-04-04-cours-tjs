@@ -15,7 +15,9 @@ const MemeForm: FC<I_MemeFormProps> = (props) => {
   return (
     <div className={style.MemeForm} data-testid="MemeForm">
       memeForm
-      <form>
+      <form onSubmit={(evt)=>{
+        evt.preventDefault();        
+      }}>
         <input type="text" name="" id="" placeholder="Texte du Même" value={props.currentMeme.text} onChange={evt=>{props.onInputValueChange({text:evt.target.value})}}/>
         <div className="flexCol">
           <Button type="submit" bgColor="skyblue">Validation</Button>
