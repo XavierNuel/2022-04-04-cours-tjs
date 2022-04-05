@@ -2,6 +2,7 @@
   "memes": [
     {
       "id": 0,
+      "titre": "Titre Meme",
       "text": "Dummy Meme",
       "x": 50,
       "y": 100,
@@ -19,7 +20,22 @@
       "url": "south-park.jpg",
       "w": 1280,
       "h": 720,
-      "name": "south-park"
+      "name": "South-park"
+    },
+    {
+      "id": 1,
+      "url": "les-simpson.jpg",
+      "w": 900,
+      "h": 600,
+      "name": "Les simpson"
+    },
+    {
+      "id": 2,
+      "url": "cowboy-beebop.jpg",
+      "w": 1400,
+      "h": 932,
+      "name": "Cowboy Beebop"
     }
   ]
-}0
+
+}
