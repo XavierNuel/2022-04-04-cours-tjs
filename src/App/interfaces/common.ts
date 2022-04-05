@@ -12,6 +12,7 @@ export interface I_Meme {
   y: number;
   fontWeight: string;
   fontSize: number;
+  color: string;
   underline: boolean;
   italic: boolean;
   imageId: number|null; // number ou nul
@@ -23,6 +24,7 @@ export const DummyMeme: I_Meme = {
   y: 100,
   fontWeight: "900",
   fontSize: 30,
+  color:'#456123',
   underline: true,
   italic: false,
   imageId: 0,

@@ -1,9 +1,15 @@
 import React, { Component } from "react";
+import { threadId } from "worker_threads";
 import style from "./App.module.css";
 
 import FlexWLayout from "./components/layouts/FlexWLayout/FlexWLayout";
 import MemeForm from "./components/MemeForm/MemeForm";
 import MemeViewer from "./components/MemeViewer/MemeViewer";
+import {
+  DummyMeme as initialMemeState,
+  I_Image,
+  I_Meme,
+} from "./interfaces/common";
 
 // On défini les types des variables de notre App
 interface I_AppProps {
@@ -12,14 +18,26 @@ interface I_AppProps {
 
 // On défini les types des états de notre App
 interface I_AppState {
-  meme: {}
+  currentMeme: I_Meme;
+  images: Array<I_Image>;
 }
 
 class App extends Component<I_AppProps, I_AppState> {
   // Constructeur de notre App avec états initiaux
   constructor(props: I_AppProps) {
     super(props);
-    this.state = { counter: 0, textButton: "Push the Button" };
+    this.state = {
+      currentMeme: initialMemeState,
+      images: [
+        {
+          id: 0,
+          url: "south-park.jpg",
+          w: 1280,
+          h: 720,
+          name: "south-park",
+        },
+      ],
+    };
   }
 
   // Fonction d'affichage du composant
@@ -27,11 +45,23 @@ class App extends Component<I_AppProps, I_AppState> {
   render(): React.ReactNode {
     return (
       <div className={style.App}>
+        {JSON.stringify(this.state)}
         <FlexWLayout>
           <div>
-            <MemeViewer meme={} />
+            <MemeViewer
+              meme={this.state.currentMeme}
+              image={this.state.images.find(
+                (e) => e.id === this.state.currentMeme.imageId
+              )}
+            />
           </div>
-          <MemeForm />
+          <MemeForm
+            currentMeme={this.state.currentMeme}
+            images={this.state.images}
+            onInputValueChange={(changedValuesObject: any) => {
+              this.setState({currentMeme:{...this.state.currentMeme,...changedValuesObject}});
+            }}
+          />
         </FlexWLayout>
       </div>
     );
