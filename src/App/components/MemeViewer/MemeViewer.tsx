@@ -51,4 +51,4 @@ function mapDispatchToProps(dispatch: Function) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemeViewer);
-export const unconnected = MemeViewer;
+export const unConnectedMemeViewer = MemeViewer;

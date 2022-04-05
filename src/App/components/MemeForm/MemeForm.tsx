@@ -180,4 +180,4 @@ function mapDispatchToProps(dispatch: Function) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemeForm);
-export const unconnectedMemeForm=MemeForm;
+export const unConnectedMemeForm=MemeForm;

@@ -8,6 +8,7 @@ import style from "./App.module.css";
 import FlexWLayout from "./components/layouts/FlexWLayout/FlexWLayout";
 import MemeForm from "./components/MemeForm/MemeForm";
 import MemeViewer from "./components/MemeViewer/MemeViewer";
+import MemeThumbnail from "./components/MemeThumbnail/MemeThumbnail";
 
 interface I_AppProps {
   AppName?: string;
@@ -55,6 +56,7 @@ class App extends Component<I_AppProps> {
     return (
       <div className={style.App}>
         {JSON.stringify(this.state)}
+        <MemeThumbnail />
         <FlexWLayout>
           <div>
             <MemeViewer
