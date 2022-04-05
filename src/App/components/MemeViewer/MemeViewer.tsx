@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./MemeViewer.module.scss";
 import { I_Image, I_Meme } from "../../interfaces/common";
 

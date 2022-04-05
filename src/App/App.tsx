@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { threadId } from "worker_threads";
 import style from "./App.module.css";
 
 import FlexWLayout from "./components/layouts/FlexWLayout/FlexWLayout";
@@ -11,6 +10,9 @@ import {
   I_Meme,
 } from "./interfaces/common";
 
+import {REST_SRV_BASE_URL} from "./config/config";
+
+
 // On défini les types des variables de notre App
 interface I_AppProps {
   AppName?: string;
@@ -20,6 +22,7 @@ interface I_AppProps {
 interface I_AppState {
   currentMeme: I_Meme;
   images: Array<I_Image>;
+  memes: Array<I_Meme>;
 }
 
 class App extends Component<I_AppProps, I_AppState> {
@@ -28,15 +31,8 @@ class App extends Component<I_AppProps, I_AppState> {
     super(props);
     this.state = {
       currentMeme: initialMemeState,
-      images: [
-        {
-          id: 0,
-          url: "south-park.jpg",
-          w: 1280,
-          h: 720,
-          name: "south-park",
-        },
-      ],
+      memes: [],
+      images: [],
     };
   }
 
@@ -74,6 +70,13 @@ class App extends Component<I_AppProps, I_AppState> {
       "font-size:24px;color:green;font-weight:900",
       "Le component APP est MONTÉ"
     );
+
+    const prm = fetch( `${REST_SRV_BASE_URL}/memes` ).then(f=>f.json());
+    const pri = fetch( `${REST_SRV_BASE_URL}/images` ).then(f=>f.json());
+
+    Promise.all([prm, pri]).then((aResp)=>{
+      this.setState({images: aResp[1], memes: aResp[0]});
+    })
   }
 
   componentDidUpdate(oldProps: I_AppProps, oldState: I_AppState) {

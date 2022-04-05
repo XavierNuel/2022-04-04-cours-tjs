@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import style from "./MemeForm.module.scss";
 import Button from "../Button/Button";
 import { I_Image, I_Meme } from "../../interfaces/common"
-import { isPropertyAccessOrQualifiedName } from "typescript";
 
 // On défini les types des variables de notre MemeForm
 interface I_MemeFormProps {
