@@ -86,7 +86,8 @@ function currentReducer(state = DummyMeme, action) {
   }
 }
 
-// Création d'une galerie marchande (une liste de magasins );
+// Création d'une galerie marchande (une liste de magasins combinés);
+// Prendre cette habitude, meme si le magasin est tout seul, ça permet d'ajouter des magasins sans tout revoir...
 const combinedReducers = combineReducers({
   modal: modalReducer,
   ressources: ressourceReducer,
@@ -96,6 +97,7 @@ const combinedReducers = combineReducers({
 // Et on l'exporte
 export const store = createStore(
   combinedReducers,
+  // La ligne suivante permet de connecter Redux à un débuguer dans Chrome (extension React DevTools)
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

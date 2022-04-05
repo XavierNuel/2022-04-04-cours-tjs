@@ -55,7 +55,6 @@ class App extends Component<I_AppProps> {
   render(): React.ReactNode {
     return (
       <div className={style.App}>
-        {JSON.stringify(this.state)}
         <MemeThumbnail />
         <FlexWLayout>
           <div>
