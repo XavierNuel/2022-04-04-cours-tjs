@@ -10,8 +10,7 @@ import {
   I_Meme,
 } from "./interfaces/common";
 
-import {REST_SRV_BASE_URL} from "./config/config";
-
+import { store } from "./store/store";
 
 // On défini les types des variables de notre App
 interface I_AppProps {
@@ -55,7 +54,12 @@ class App extends Component<I_AppProps, I_AppState> {
             currentMeme={this.state.currentMeme}
             images={this.state.images}
             onInputValueChange={(changedValuesObject: any) => {
-              this.setState({currentMeme:{...this.state.currentMeme,...changedValuesObject}});
+              this.setState({
+                currentMeme: {
+                  ...this.state.currentMeme,
+                  ...changedValuesObject,
+                },
+              });
             }}
           />
         </FlexWLayout>
@@ -71,12 +75,19 @@ class App extends Component<I_AppProps, I_AppState> {
       "Le component APP est MONTÉ"
     );
 
-    const prm = fetch( `${REST_SRV_BASE_URL}/memes` ).then(f=>f.json());
-    const pri = fetch( `${REST_SRV_BASE_URL}/images` ).then(f=>f.json());
+    // On récupère l'état initial
+    this.setState({
+      memes: store.getState().memes,
+      images: store.getState().images,
+    });
 
-    Promise.all([prm, pri]).then((aResp)=>{
-      this.setState({images: aResp[1], memes: aResp[0]});
-    })
+    // Et on met à jour aux changements
+    store.subscribe(() => {
+      this.setState({
+        memes: store.getState().memes,
+        images: store.getState().images,
+      });
+    });
   }
 
   componentDidUpdate(oldProps: I_AppProps, oldState: I_AppState) {
