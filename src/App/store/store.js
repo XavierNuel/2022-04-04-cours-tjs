@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from "redux";
 import { REST_SRV_BASE_URL } from "../config/config";
+import { DummyMeme } from "../interfaces/common";
 
 // Pour passer en TS, il faudrait ajouter des interfaces
 const initialRessourcesState = {
@@ -65,10 +66,35 @@ function modalReducer(state = { isShown: false, content: "" }, action) {
   }
 }
 
-// Création d'une galerie marchange (une liste de magasins );
-const combinedReducers = combineReducers({modal:modalReducer, ressources:ressourceReducer });
+// Création d'un magasin pour mettre à jour le Meme Current
+export const CURRENT_ACTIONS = Object.freeze({
+  UPDATE_CURRENT: "UPDATE_CURRENT",
+  RESET_CURRENT: "RESET_CURRENT",
+});
+
+function currentReducer(state = DummyMeme, action) {
+  console.log(action);
+  switch (action.type) {
+    case CURRENT_ACTIONS.RESET_CURRENT:
+      return { ...DummyMeme };
+
+    case CURRENT_ACTIONS.UPDATE_CURRENT:
+      return { ...state, ...DummyMeme };
+
+    default:
+      return state;
+  }
+}
+
+// Création d'une galerie marchande (une liste de magasins );
+const combinedReducers = combineReducers({
+  modal: modalReducer,
+  ressources: ressourceReducer,
+  current: currentReducer,
+});
+
 // Et on l'exporte
-export const store = createStore( combinedReducers );
+export const store = createStore(combinedReducers);
 
 // dès que le store change, ça déclenche
 store.subscribe(() => {
