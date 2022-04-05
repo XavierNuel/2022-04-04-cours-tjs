@@ -79,7 +79,7 @@ function currentReducer(state = DummyMeme, action) {
       return { ...DummyMeme };
 
     case CURRENT_ACTIONS.UPDATE_CURRENT:
-      return { ...state, ...DummyMeme };
+      return { ...state, ...action.value };
 
     default:
       return state;
@@ -94,7 +94,10 @@ const combinedReducers = combineReducers({
 });
 
 // Et on l'exporte
-export const store = createStore(combinedReducers);
+export const store = createStore(
+  combinedReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 // dès que le store change, ça déclenche
 store.subscribe(() => {

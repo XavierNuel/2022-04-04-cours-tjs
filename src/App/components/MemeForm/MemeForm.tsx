@@ -2,6 +2,9 @@ import React, { FC } from "react";
 import styles from "./MemeForm.module.scss";
 import { I_Image, I_Meme } from "../../interfaces/common";
 import Button from "../Button/Button";
+import { connect } from "react-redux";
+import { CURRENT_ACTIONS } from "../../store/store";
+
 //const initialState = {};
 interface I_MemeFormProps {
   currentMeme: I_Meme;
@@ -156,4 +159,25 @@ const MemeForm: FC<I_MemeFormProps> = (props) => {
     </div>
   );
 };
-export default MemeForm;
+
+function mapStateToProps(storeState: any, ownProps: any) {
+  return {
+    ...ownProps,
+    images: storeState.ressources.images,
+    currentMeme: storeState.current,
+  };
+}
+
+function mapDispatchToProps(dispatch: Function) {
+  return {
+    onInputValueChange: (memeValuesToChange: object) => {
+      dispatch({
+        type: CURRENT_ACTIONS.UPDATE_CURRENT,
+        value: memeValuesToChange,
+      });
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MemeForm);
+export const unconnectedMemeForm=MemeForm;
