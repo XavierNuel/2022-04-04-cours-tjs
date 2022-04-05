@@ -1,4 +1,4 @@
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 import { REST_SRV_BASE_URL } from "../config/config";
 
 // Pour passer en TS, il faudrait ajouter des interfaces
@@ -16,6 +16,7 @@ export const RessourcesActions = Object.freeze({
   ADD_MEME: "ADD_MEME",
 });
 
+// Création d'un magasin pour gérer les ressources images et mêmes, et données initales
 function ressourceReducer(state = initialRessourcesState, action) {
   console.log(action);
   switch (action.type) {
@@ -29,7 +30,7 @@ function ressourceReducer(state = initialRessourcesState, action) {
       return { ...state, memes: [...state.memes, action.value] };
 
     case "ADD_INIT_ALL":
-      return { ...state, memes: action.values[0], images: action.values[1] };
+      return { ...state, memes: action.memes, images: action.images };
 
     case "INIT_LOADING":
       const prm = fetch(`${REST_SRV_BASE_URL}/memes`).then((f) => f.json());
@@ -49,17 +50,36 @@ function ressourceReducer(state = initialRessourcesState, action) {
   }
 }
 
-export const store = createStore(ressourceReducer);
+// Création d'un magasin pour une possible modale
+function modalReducer(state = { isShown: false, content: "" }, action) {
+  console.log(action);
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { isShown: true, content: action.value };
+
+    case "HIDE_MODAL":
+      return { isShown: false, content: "" };
+
+    default:
+      return state;
+  }
+}
+
+// Création d'une galerie marchange (une liste de magasins );
+const combinedReducers = combineReducers({modal:modalReducer, ressources:ressourceReducer });
+// Et on l'exporte
+export const store = createStore( combinedReducers );
 
 // dès que le store change, ça déclenche
 store.subscribe(() => {
   console.log(store.getState());
 });
 
+// On lance l'initialisation première...
+// Qui va venir charger les listes d'images et de memes présents dans db.js
 store.dispatch({
-  type: "ADD_INIT_ALL",
+  type: "INIT_LOADING",
 });
-
 
 //store.dispatch( {type:RessourcesActions.ADD_INIT_IMAGES, values:[{id:5}, {id:6}]});
 //store.dispatch( {type:RessourcesActions.ADD_INIT_MEMES, values:[{id:15}, {id:16}]});

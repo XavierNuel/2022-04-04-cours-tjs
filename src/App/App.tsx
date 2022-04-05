@@ -77,15 +77,15 @@ class App extends Component<I_AppProps, I_AppState> {
 
     // On récupère l'état initial
     this.setState({
-      memes: store.getState().memes,
-      images: store.getState().images,
+      memes: store.getState().ressources.memes,
+      images: store.getState().ressources.images,
     });
 
     // Et on met à jour aux changements
     store.subscribe(() => {
       this.setState({
-        memes: store.getState().memes,
-        images: store.getState().images,
+        memes: store.getState().ressources.memes,
+        images: store.getState().ressources.images,
       });
     });
   }
