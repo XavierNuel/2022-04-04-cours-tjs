@@ -12,6 +12,45 @@
       "underline": true,
       "italic": false,
       "imageId": 0
+    },
+    {
+      "id": 2,
+      "titre": "meme2",
+      "text": "Hello",
+      "x": 50,
+      "y": 100,
+      "fontWeight": "900",
+      "fontSize": 30,
+      "underline": true,
+      "italic": false,
+      "imageId": 0,
+      "color": "#0CFFA0"
+    },
+    {
+      "titre": "TEST",
+      "text": "Test",
+      "x": 50,
+      "y": 100,
+      "fontWeight": "900",
+      "fontSize": 30,
+      "color": "#456123",
+      "underline": true,
+      "italic": false,
+      "imageId": 2,
+      "id": 3
+    },
+    {
+      "titre": "Dummy Memessss",
+      "text": "Texte Dummy Memessss",
+      "x": 50,
+      "y": 100,
+      "fontWeight": "900",
+      "fontSize": 30,
+      "color": "#456123",
+      "underline": true,
+      "italic": false,
+      "imageId": 1,
+      "id": 4
     }
   ],
   "images": [
@@ -37,5 +76,4 @@
       "name": "Cowboy Beebop"
     }
   ]
-
 }

@@ -10,6 +10,7 @@ interface I_MemeFormProps {
   currentMeme: I_Meme;
   images: Array<I_Image>;
   onInputValueChange: Function;
+  onSubmit: Function;
 }
 const MemeForm: FC<I_MemeFormProps> = (props) => {
   return (
@@ -17,6 +18,9 @@ const MemeForm: FC<I_MemeFormProps> = (props) => {
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
+          // déclenchement du STORE => SAVE_MEME
+          // Via le dispatch par mapDispatchToProps
+          props.onSubmit();          
         }}
       >
         <h1>Titre</h1>
@@ -46,7 +50,7 @@ const MemeForm: FC<I_MemeFormProps> = (props) => {
           <option value="-1">Aucune</option>
         </select>
         <hr />
-        <h2>text</h2>
+        <h2>Texte</h2>
         <input
           type="text"
           value={props.currentMeme.text}
@@ -176,6 +180,12 @@ function mapDispatchToProps(dispatch: Function) {
         value: memeValuesToChange,
       });
     },
+    onSubmit: () => {
+      dispatch({
+        type: CURRENT_ACTIONS.SAVE_CURRENT,
+      });
+    },
+
   };
 }
 

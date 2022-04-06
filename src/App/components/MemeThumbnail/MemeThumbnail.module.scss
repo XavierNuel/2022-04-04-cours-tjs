@@ -1,4 +1,10 @@
 .MemeThumbnail {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.MemeThumbnail > svg {
     max-width: 100%;
     width: 350px;
+    padding: 10px;
 }

@@ -70,15 +70,36 @@ function modalReducer(state = { isShown: false, content: "" }, action) {
 export const CURRENT_ACTIONS = Object.freeze({
   UPDATE_CURRENT: "UPDATE_CURRENT",
   RESET_CURRENT: "RESET_CURRENT",
+  SAVE_CURRENT: "SAVE_CURRENT",
 });
 
 function currentReducer(state = DummyMeme, action) {
   console.log(action);
   switch (action.type) {
+
+    // Si on sauve ou si on reset
+    case CURRENT_ACTIONS.SAVE_CURRENT:
     case CURRENT_ACTIONS.RESET_CURRENT:
       return { ...DummyMeme };
 
+    // Si on met à jour
     case CURRENT_ACTIONS.UPDATE_CURRENT:
+      return { ...state, ...action.value };
+
+      // Si on ajoute un meme
+    case CURRENT_ACTIONS.SAVE_CURRENT:
+      var args = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(state),
+      };
+      fetch(`${REST_SRV_BASE_URL}/memes`, args)
+        .then((f) => f.json())
+        .then((o) => {
+          store.dispatch({ type: RessourcesActions.ADD_MEME, value: o });
+        });
       return { ...state, ...action.value };
 
     default:

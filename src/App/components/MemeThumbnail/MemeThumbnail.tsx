@@ -14,7 +14,7 @@ export const MemeThumbnail: React.FC<I_MemeThumbnailProps> = (props) => {
       {props.memes.map((e, i) => {
         return (
           <UCMemeViewer
-            key={"thumbnail-img-" + i}
+            key={"thumbnail-mem-viewer-" + i}
             meme={e}
             image={props.images.find((ii) => ii.id === e.imageId)}
           />
