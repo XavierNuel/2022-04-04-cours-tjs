@@ -1,3 +1,7 @@
+//
+// Partie très importe qui gèe nos données et les échanges avec l'application pour tous nos composants
+// Les données sont associées à l'App directement, et les composants vont y chercher leurs billes quand elles en ont besoin
+//
 import { createStore, combineReducers } from "redux";
 import { REST_SRV_BASE_URL } from "../config/config";
 import { DummyMeme } from "../interfaces/common";
@@ -78,8 +82,9 @@ function currentReducer(state = DummyMeme, action) {
   switch (action.type) {
 
     // Si on sauve ou si on reset
-    case CURRENT_ACTIONS.SAVE_CURRENT:
+    case RessourcesActions.ADD_MEME:
     case CURRENT_ACTIONS.RESET_CURRENT:
+      console.log('reset');
       return { ...DummyMeme };
 
     // Si on met à jour
@@ -88,6 +93,7 @@ function currentReducer(state = DummyMeme, action) {
 
       // Si on ajoute un meme
     case CURRENT_ACTIONS.SAVE_CURRENT:
+      console.log('save');
       var args = {
         method: "POST",
         headers: {
@@ -98,6 +104,7 @@ function currentReducer(state = DummyMeme, action) {
       fetch(`${REST_SRV_BASE_URL}/memes`, args)
         .then((f) => f.json())
         .then((o) => {
+          // On déclenche l'ajout du meme, ce qui déclenchera aussi le reset
           store.dispatch({ type: RessourcesActions.ADD_MEME, value: o });
         });
       return { ...state, ...action.value };
