@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import style from "./FlexVLayout.module.scss";
 
 
-const initialState = {};
 /**
  *
  * @param {*} props

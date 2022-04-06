@@ -1,1 +1,7 @@
-.FlexVLayout {}
+.FlexVLayout {
+    display: flex;
+    flex-direction: column;
+}
+.FlexVLayout >*:nth-child(3){
+    flex-grow:1;
+}

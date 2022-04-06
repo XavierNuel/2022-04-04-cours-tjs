@@ -9,6 +9,9 @@ import FlexWLayout from "./components/layouts/FlexWLayout/FlexWLayout";
 import MemeForm from "./components/MemeForm/MemeForm";
 import MemeViewer from "./components/MemeViewer/MemeViewer";
 import MemeThumbnail from "./components/MemeThumbnail/MemeThumbnail";
+import FlexVLayout from "./components/layouts/FlexVLayout/FlexVLayout";
+import Navbar from "./components/Navbar/Navbar";
+import { Link } from 'react-router-dom'
 
 interface I_AppProps {
   AppName?: string;
@@ -55,29 +58,39 @@ class App extends Component<I_AppProps> {
   render(): React.ReactNode {
     return (
       <div className={style.App}>
-        <MemeThumbnail />
-        <FlexWLayout>
-          <div>
-            <MemeViewer
-            //meme={this.state.currentMeme}
-            //image={this.state.images.find(
-            //  (e) => e.id === this.state.currentMeme.imageId
-            //)}
-            />
+        <FlexVLayout>
+          <div className={style.header}>Meme Generator en REACT-JS
+          <br />
+          <Link to="/">Home</Link> - 
+          <Link to="/thumbnail">Thumbnail</Link> -
+          <Link to="/editor">Nouveau</Link> -
+          <Link to="/editor/1">Edit 1</Link>
           </div>
-          <MemeForm
-          // currentMeme={this.state.currentMeme}
-          // images={this.state.images}
-          // onInputValueChange={(changedValuesObject: any) => {
-          //   this.setState({
-          //     currentMeme: {
-          //       ...this.state.currentMeme,
-          //       ...changedValuesObject,
-          //     },
-          //   });
-          // }}
-          />
-        </FlexWLayout>
+          {/* <MemeThumbnail /> */}
+          <Navbar></Navbar>
+          <FlexWLayout>
+            <div>
+              <MemeViewer
+              //meme={this.state.currentMeme}
+              //image={this.state.images.find(
+              //  (e) => e.id === this.state.currentMeme.imageId
+              //)}
+              />
+            </div>
+            <MemeForm
+            // currentMeme={this.state.currentMeme}
+            // images={this.state.images}
+            // onInputValueChange={(changedValuesObject: any) => {
+            //   this.setState({
+            //     currentMeme: {
+            //       ...this.state.currentMeme,
+            //       ...changedValuesObject,
+            //     },
+            //   });
+            // }}
+            />
+          </FlexWLayout>
+        </FlexVLayout>
       </div>
     );
   }
