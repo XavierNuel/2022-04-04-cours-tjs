@@ -51,6 +51,32 @@
       "italic": false,
       "imageId": 1,
       "id": 4
+    },
+    {
+      "titre": "Dummy Memezrzr",
+      "text": "Texte Dummy Memezrzr",
+      "x": 50,
+      "y": 100,
+      "fontWeight": "900",
+      "fontSize": 44,
+      "color": "#7e054b",
+      "underline": true,
+      "italic": false,
+      "imageId": 0,
+      "id": 5
+    },
+    {
+      "titre": "Test",
+      "text": "Test",
+      "x": 1062,
+      "y": 600,
+      "fontWeight": "900",
+      "fontSize": 100,
+      "color": "#456123",
+      "underline": false,
+      "italic": true,
+      "imageId": 2,
+      "id": 6
     }
   ],
   "images": [

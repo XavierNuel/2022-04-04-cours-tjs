@@ -1,8 +1,4 @@
-// On repart sur une version qui passera que par les reducer...
-// Plus besoin de State, constructors...
-//
-
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import style from "./App.module.css";
 
 import FlexWLayout from "./components/layouts/FlexWLayout/FlexWLayout";
@@ -11,88 +7,94 @@ import MemeViewer from "./components/MemeViewer/MemeViewer";
 import MemeThumbnail from "./components/MemeThumbnail/MemeThumbnail";
 import FlexVLayout from "./components/layouts/FlexVLayout/FlexVLayout";
 import Navbar from "./components/Navbar/Navbar";
-import { Link } from 'react-router-dom'
+import { Route, Switch, Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { DummyMeme, I_Meme } from "./interfaces/common";
+import { CURRENT_ACTIONS } from "./store/store";
 
 interface I_AppProps {
   AppName?: string;
 }
-// interface I_AppState {
-//   currentMeme: I_Meme;
-//   images: Array<I_Image>;
-//   memes: Array<I_Meme>;
-// }
 class App extends Component<I_AppProps> {
-  // constructor(props: I_AppProps) {
-  //   super(props);
-  //   // this.state = {
-  //   //   currentMeme: initalMemeState,
-  //   //   memes: [],
-  //   //   images: [],
-  //   // };
-  // }
-  componentDidMount() {
-    // console.log(
-    //   "%c%s",
-    //   "font-size:24pt;color:green;font-weight:900",
-    //   "Le component App est monté"
-    // );
-    // this.setState({memes:store.getState().ressources.memes,images:store.getState().ressources.images});
-    // store.subscribe(()=>{
-    //   this.setState({memes:store.getState().ressources.memes,images:store.getState().ressources.images})
-    // })
-  }
-  // componentDidUpdate(oldProps: I_AppProps, oldState: I_AppState) {
-  //   console.log(
-  //     "%c%s",
-  //     "font-size:16pt;color:blue;font-weight:900",
-  //     "==========cmp updated========"
-  //   );
-  //   console.log("props->", oldProps, this.props);
-  //   console.log("state->", oldState, this.state);
-  //   console.log(
-  //     "%c%s",
-  //     "font-size:16pt;color:blue;font-weight:900",
-  //     "============================="
-  //   );
-  // }
+  componentDidMount() {}
+
   render(): React.ReactNode {
     return (
       <div className={style.App}>
         <FlexVLayout>
-          <div className={style.header}>Meme Generator en REACT-JS
-          <br />
-          <Link to="/">Home</Link> - 
-          <Link to="/thumbnail">Thumbnail</Link> -
-          <Link to="/editor">Nouveau</Link> -
-          <Link to="/editor/1">Edit 1</Link>
+          <div className={style.header}>
+            Meme Generator en REACT-JS
+            <br />
+            <Link to="/">Home</Link> -<Link to="/thumbnail">Thumbnail</Link> -
+            <Link to="/editor">Nouveau</Link> -
+            <Link to="/editor/1">Edit 1</Link>
           </div>
-          {/* <MemeThumbnail /> */}
+
           <Navbar></Navbar>
-          <FlexWLayout>
-            <div>
-              <MemeViewer
-              //meme={this.state.currentMeme}
-              //image={this.state.images.find(
-              //  (e) => e.id === this.state.currentMeme.imageId
-              //)}
-              />
-            </div>
-            <MemeForm
-            // currentMeme={this.state.currentMeme}
-            // images={this.state.images}
-            // onInputValueChange={(changedValuesObject: any) => {
-            //   this.setState({
-            //     currentMeme: {
-            //       ...this.state.currentMeme,
-            //       ...changedValuesObject,
-            //     },
-            //   });
-            // }}
-            />
-          </FlexWLayout>
+          <Switch>
+            <Route path="/" exact>
+              <div className={style.home}>Bonjour et welcome</div>
+            </Route>
+            {/* ici on est en react-router-dom 5 //           <Route path="/editor" exact />   */}
+            {/* si on est en react-router-dom 6 //    <= obligé de passer par un appel de composant*/}
+            <Route path="/editor" component={RoutedEditor} exact />
+            <Route path="/editor/:id" component={RoutedEditor} />
+            <Route path="/thumbnail">
+              <MemeThumbnail />
+            </Route>
+            {/* cas d'une dernière route poubelle ... */}
+            <Route path="/">
+              <div className={style.error}>Route inexistante</div>
+            </Route>
+          </Switch>
         </FlexVLayout>
       </div>
     );
   }
 }
+
+// Déclaration d'un composant interne
+function Editor(props: any) {
+  console.log(props);
+  // quand une valeur subit un montage ou un changement
+  useEffect(() => {
+    // on met à jour le store qui est connecté
+    props.update(props.memes.find((m:I_Meme)=>m.id===parseInt(props.match.params.id)))
+    // et si on est sur le démontage du composant
+    return () => {
+      props.update(undefined);
+    };
+  }, [props]);
+
+  return (
+    <FlexWLayout>
+      <div>
+        <MemeViewer />
+      </div>
+      <MemeForm />
+    </FlexWLayout>
+  );
+}
+
+// Map state to Props
+function mstp(state: any, own: any) {
+  return { ...own, memes: state.ressources.memes };
+}
+//
+// Map dispatch to Props
+//
+function mdtp(dispatch: Function) {
+  return {
+    update: (meme: I_Meme | undefined) => {
+      dispatch({
+        type: CURRENT_ACTIONS.UPDATE_CURRENT,
+        value: meme ? meme : DummyMeme,
+      });
+    },
+  };
+}
+
+// On surcharge les Props avec les infos d'url, param du navigateur (history, location, match...)
+const RoutedEditor = withRouter(connect(mstp, mdtp)(Editor));
+
 export default App;
