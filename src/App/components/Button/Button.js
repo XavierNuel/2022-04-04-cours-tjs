@@ -28,7 +28,6 @@ function Button(props) {
     []
   );
 
-  console.log(props);
   return (
     <button
       className={`${style.Button}${clicked ? " " + style.clicked : ""}`}

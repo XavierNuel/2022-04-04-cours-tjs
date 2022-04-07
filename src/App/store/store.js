@@ -32,7 +32,22 @@ function ressourceReducer(state = initialRessourcesState, action) {
       return { ...state, memes: action.values };
 
     case RessourcesActions.ADD_MEME:
-      return { ...state, memes: [...state.memes, action.value] };
+      // On cherche si on l'avait pas déjà celui là (basé sur l'ID)
+      const pos = state.memes.findIndex((m) => m.id === action.value.id);
+      // Si on a un nouveau meme ( findIndex retourne -1 );
+      if (pos < 0) {
+        return { ...state, memes: [...state.memes, action.value] };
+      } else {
+        // on remet à sa place avec les nouvelles valeurs
+        return {
+          ...state,
+          memes: [
+            ...state.memes.slice(0, pos - 1),
+            action.value,
+            ...state.memes.slice(pos),
+          ],
+        };
+      }
 
     case "ADD_INIT_ALL":
       return { ...state, memes: action.memes, images: action.images };
@@ -56,15 +71,45 @@ function ressourceReducer(state = initialRessourcesState, action) {
 }
 
 // Création d'un magasin pour une possible modale
-function modalReducer(state = { isShown: false, content: "" }, action) {
-  console.log(action);
+function modalReducer(
+  state = {
+    isShown: false,
+    content: "Contenu par défaut de la modal",
+    title: "Bienvenue",
+    callBack: () => console.log("Hello closed"),
+    cancelCallBack: undefined,
+  },
+  action
+) {
   switch (action.type) {
     case "SHOW_MODAL":
-      return { isShown: true, content: action.value };
-
+      return {
+        isShown: true,
+        title: action.title,
+        content: action.value,
+        closeCallback: action.closeCallback,
+        cancelCallback: action.cancelCallback,
+      };
     case "HIDE_MODAL":
-      return { isShown: false, content: "" };
-
+      if (state.closeCallback && typeof state.closeCallback === "function") {
+        state.closeCallback();
+      }
+      return {
+        isShown: false,
+        content: "",
+        cancelCallback: undefined,
+        closeCallback: () => {},
+      };
+    case "CANCEL_MODAL":
+      if (state.cancelCallback && typeof state.cancelCallback === "function") {
+        state.cancelCallback();
+      }
+      return {
+        isShown: false,
+        content: "",
+        cancelCallback: undefined,
+        closeCallback: () => {},
+      };
     default:
       return state;
   }
@@ -80,28 +125,32 @@ export const CURRENT_ACTIONS = Object.freeze({
 function currentReducer(state = DummyMeme, action) {
   console.log(action);
   switch (action.type) {
-
     // Si on sauve ou si on reset
     case RessourcesActions.ADD_MEME:
     case CURRENT_ACTIONS.RESET_CURRENT:
-      console.log('reset');
+      console.log("reset");
       return { ...DummyMeme };
 
     // Si on met à jour
     case CURRENT_ACTIONS.UPDATE_CURRENT:
       return { ...state, ...action.value };
 
-      // Si on ajoute un meme
+    // Si on ajoute un meme
     case CURRENT_ACTIONS.SAVE_CURRENT:
-      console.log('save');
+      console.log("save");
       var args = {
-        method: "POST",
+        method: `${undefined !== state.id ? "PUT" : "POST"}`,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(state),
       };
-      fetch(`${REST_SRV_BASE_URL}/memes`, args)
+      fetch(
+        `${REST_SRV_BASE_URL}/memes${
+          undefined !== state.id ? "/" + state.id : ""
+        }`,
+        args
+      )
         .then((f) => f.json())
         .then((o) => {
           // On déclenche l'ajout du meme, ce qui déclenchera aussi le reset

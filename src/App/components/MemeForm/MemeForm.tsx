@@ -20,7 +20,7 @@ const MemeForm: FC<I_MemeFormProps> = (props) => {
           evt.preventDefault();
           // déclenchement du STORE => SAVE_MEME
           // Via le dispatch par mapDispatchToProps
-          props.onSubmit();          
+          props.onSubmit();
         }}
       >
         <h1>Titre</h1>
@@ -181,13 +181,31 @@ function mapDispatchToProps(dispatch: Function) {
       });
     },
     onSubmit: () => {
+
+      // Sauvegarde sans confirmation
+      // Voir plus bas pourquoi ça ne passe pas
       dispatch({
         type: CURRENT_ACTIONS.SAVE_CURRENT,
       });
-    },
 
+      /*
+      dispatch({
+        type: "SHOW_MODAL",
+        title: "Confirmation",
+        content: "Voulez vous sauver le Meme?",
+        closeCallback: () => {
+          // Ca ne fonctionne pas,
+          // La cascade de dispatch ne se fait pas...
+          dispatch({
+            type: CURRENT_ACTIONS.SAVE_CURRENT,
+          });
+        },
+        cancelCallback: () => {},
+      });
+      */
+    },
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemeForm);
-export const unConnectedMemeForm=MemeForm;
+export const unConnectedMemeForm = MemeForm;

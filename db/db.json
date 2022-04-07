@@ -14,21 +14,21 @@
       "imageId": 0
     },
     {
-      "id": 2,
-      "titre": "meme2",
-      "text": "Hello",
+      "titre": "meme222",
+      "text": "Hello World",
       "x": 50,
       "y": 100,
       "fontWeight": "900",
       "fontSize": 30,
+      "color": "#c844a7",
       "underline": true,
       "italic": false,
       "imageId": 0,
-      "color": "#0CFFA0"
+      "id": 2
     },
     {
-      "titre": "TEST",
-      "text": "Test",
+      "titre": "TEST MEME",
+      "text": "TEST MEME",
       "x": 50,
       "y": 100,
       "fontWeight": "900",
@@ -77,6 +77,19 @@
       "italic": true,
       "imageId": 2,
       "id": 6
+    },
+    {
+      "titre": "Dummy Memed3131",
+      "text": "Texte Dummy Meme31332",
+      "x": 50,
+      "y": 100,
+      "fontWeight": "900",
+      "fontSize": 30,
+      "color": "#456123",
+      "underline": true,
+      "italic": false,
+      "imageId": 0,
+      "id": 7
     }
   ],
   "images": [

@@ -7,10 +7,12 @@ import MemeViewer from "./components/MemeViewer/MemeViewer";
 import MemeThumbnail from "./components/MemeThumbnail/MemeThumbnail";
 import FlexVLayout from "./components/layouts/FlexVLayout/FlexVLayout";
 import Navbar from "./components/Navbar/Navbar";
-import { Route, Switch, Link, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { DummyMeme, I_Meme } from "./interfaces/common";
 import { CURRENT_ACTIONS } from "./store/store";
+import Modal from "./components/Modal/Modal";
+import ListPdf from "./components/ListPdf/ListPdf";
 
 interface I_AppProps {
   AppName?: string;
@@ -20,17 +22,13 @@ class App extends Component<I_AppProps> {
 
   render(): React.ReactNode {
     return (
+      <>
       <div className={style.App}>
         <FlexVLayout>
-          <div className={style.header}>
-            Meme Generator en REACT-JS
-            <br />
-            <Link to="/">Home</Link> -<Link to="/thumbnail">Thumbnail</Link> -
-            <Link to="/editor">Nouveau</Link> -
-            <Link to="/editor/1">Edit 1</Link>
-          </div>
+          <div className={style.header}>Meme Generator en REACT-JS</div>
 
           <Navbar></Navbar>
+
           <Switch>
             <Route path="/" exact>
               <div className={style.home}>Bonjour et welcome</div>
@@ -42,6 +40,7 @@ class App extends Component<I_AppProps> {
             <Route path="/thumbnail">
               <MemeThumbnail />
             </Route>
+            <Route path="/listpdf" exact component={ListPdf} />
             {/* cas d'une dernière route poubelle ... */}
             <Route path="/">
               <div className={style.error}>Route inexistante</div>
@@ -49,6 +48,8 @@ class App extends Component<I_AppProps> {
           </Switch>
         </FlexVLayout>
       </div>
+      <Modal/>
+      </>
     );
   }
 }
@@ -59,7 +60,9 @@ function Editor(props: any) {
   // quand une valeur subit un montage ou un changement
   useEffect(() => {
     // on met à jour le store qui est connecté
-    props.update(props.memes.find((m:I_Meme)=>m.id===parseInt(props.match.params.id)))
+    props.update(
+      props.memes.find((m: I_Meme) => m.id === parseInt(props.match.params.id))
+    );
     // et si on est sur le démontage du composant
     return () => {
       props.update(undefined);
@@ -95,6 +98,7 @@ function mdtp(dispatch: Function) {
 }
 
 // On surcharge les Props avec les infos d'url, param du navigateur (history, location, match...)
+// Et en plus, on connecte les dispatch et state aux props
 const RoutedEditor = withRouter(connect(mstp, mdtp)(Editor));
 
 export default App;
